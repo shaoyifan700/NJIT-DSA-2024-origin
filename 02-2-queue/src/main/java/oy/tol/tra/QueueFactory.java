@@ -20,7 +20,8 @@ public class QueueFactory {
       // - Instantiates your queue implementation using Integer as template parameter, 
       //   with the given capacity,
       // - and return the object to the caller.
-      
+      QueueInterface<Integer> queue = new QueueImplementation<>(capacity);
+      return queue;  
    }
 
    /**
@@ -28,12 +29,13 @@ public class QueueFactory {
     * Use the default constructor of the queue.
     * @return The queue object.
     */
-   //  public static QueueInterface<Integer> createIntegerQueue() {
+   public static QueueInterface<Integer> createIntegerQueue() {
    //    // TODO: Implement this when you have finished your QueueImplementation.
    //    // - Instantiates your queue implementation using Integer as template parameter, 
    //    //   with default capacity,
    //    // - and return the object to the caller.
-   //    
-   // }
+      QueueInterface<Integer> queue = new QueueImplementation<>();
+      return queue;    
+    }
 
 }
