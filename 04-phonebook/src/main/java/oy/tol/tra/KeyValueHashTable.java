@@ -22,7 +22,7 @@ public class KeyValueHashTable<K extends Comparable<K>, V> implements Dictionary
 
     @Override
     public Type getType() {
-        return Type.NONE;
+        return Type.HASHTABLE;
     }
 
     @SuppressWarnings("unchecked")
@@ -42,7 +42,7 @@ public class KeyValueHashTable<K extends Comparable<K>, V> implements Dictionary
     @Override
     public int size() {
         // TODO: Implement this.
-        return 0;
+        return count;
     }
 
     /**
@@ -72,27 +72,59 @@ public class KeyValueHashTable<K extends Comparable<K>, V> implements Dictionary
     public boolean add(K key, V value) throws IllegalArgumentException, OutOfMemoryError {
         // TODO: Implement this.
         // Remeber to check for null values.
-
-        // Checks if the LOAD_FACTOR has been exceeded --> if so, reallocates to a bigger hashtable.
-        if (((double)count * (1.0 + LOAD_FACTOR)) >= values.length) {
-            reallocate((int)((double)(values.length) * (1.0 / LOAD_FACTOR)));
-        }
         // Remember to get the hash key from the Person,
         // hash table computes the index for the Person (based on the hash value),
         // if index was taken by different Person (collision), get new hash and index,
         // insert into table when the index has a null in it,
         // return true if existing Person updated or new Person inserted.
-        
-        return false;
+        if (key == null) throw new IllegalArgumentException("Key cannot be null.");
+        int index = key.hashCode() % values.length;
+        int originalIndex = index;
+        boolean isNewAddition = false; // This will indicate whether a new key-value pair was added.
+        int steps = 0;
+        while (values[index] != null && !values[index].getKey().equals(key)) {
+            index = (index + 1) % values.length;
+            steps++;
+            if (index == originalIndex) {
+                throw new OutOfMemoryError("Hash table is full.");
+            }
+        }
+
+        // If found an empty spot, it means adding a new key-value pair.
+        if (values[index] == null) {
+            count++;
+            isNewAddition = true;
+        }
+
+        values[index] = new Pair<>(key, value);
+        maxProbingSteps = Math.max(maxProbingSteps, steps);
+
+        if (steps > 0) collisionCount++;
+
+
+        if (((double) count / values.length) > LOAD_FACTOR) {
+            reallocate((int) (values.length * (1.0 / LOAD_FACTOR)));
+        }
+
+        // Return true if a new key-value pair was added, false otherwise.
+        return isNewAddition;
     }
 
     @Override
     public V find(K key) throws IllegalArgumentException {
-        // Remember to check for null.
+        if (key == null) throw new IllegalArgumentException("Key cannot be null.");
 
-        // Must use same method for computing index as add method
-        
-        return null;
+        int index = key.hashCode() % values.length;
+        int originalIndex = index;
+
+        while (values[index] != null && !values[index].getKey().equals(key)) {
+            index = (index + 1) % values.length;
+            if (index == originalIndex) {
+                return null;
+            }
+        }
+
+        return values[index] != null ? values[index].getValue() : null;
     }
 
     @Override
