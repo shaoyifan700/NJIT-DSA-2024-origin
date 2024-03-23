@@ -5,7 +5,7 @@ package oy.tol.tra;
  */
 public class KeyValueArray<K extends Comparable<K>, V> implements Dictionary<K,V> {
 
-   private Pair<K, V> [] pairs = null;
+   private Pair<K, V> [] pairs = null; //名为pairs的数组,数组元素是Pair 类型
    private int count = 0;
    private int reallocationCount = 0;
 
@@ -37,7 +37,7 @@ public class KeyValueArray<K extends Comparable<K>, V> implements Dictionary<K,V
       return count;
    }
 
-   @Override
+   @Override//return填充率（即已存储的元素占数组总大小的比例）
    public String getStatus() {
       String toReturn = "KeyValueArray reallocated " + reallocationCount + " times, each time doubles the size\n";
       toReturn += String.format("KeyValueArray fill rate is %.2f%%%n", (count / (double)pairs.length) * 100.0);
@@ -49,6 +49,7 @@ public class KeyValueArray<K extends Comparable<K>, V> implements Dictionary<K,V
       if (null == key || value == null) throw new IllegalArgumentException("Person or phone number cannot be null");
       for (Pair<K, V> pair : pairs) {
          // Must not have duplicate keys, so check if key is already in the array.
+         //必须没有重复的键，因此检查数组中是否已经存在key。
          if (pair != null && pair.getKey().equals(key)) {
             pair.setValue(value);
             return true;

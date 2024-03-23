@@ -2,9 +2,7 @@ package oy.tol.tra;
 
 public class KeyValueBSearchTree<K extends Comparable<K>, V> implements Dictionary<K, V> {
 
-    // This is the BST implementation, KeyValueHashTable has the hash table
-    // implementation
-
+    
     private TreeNode<K, V> root;
     private int count = 0;
     private int maxTreeDepth = 0;
@@ -16,7 +14,6 @@ public class KeyValueBSearchTree<K extends Comparable<K>, V> implements Dictiona
 
     @Override
     public int size() {
-        // TODO: Implement this
         return count;
     }
 
@@ -56,7 +53,7 @@ public class KeyValueBSearchTree<K extends Comparable<K>, V> implements Dictiona
         // update the root node. But it may have children
         // so do not just replace it with this new node but set
         // the keys and values for the already existing root.
-
+/* 
         if (key == null || value == null) {
             throw new IllegalArgumentException("Neither key nor value can be null.");
         }
@@ -77,16 +74,37 @@ public class KeyValueBSearchTree<K extends Comparable<K>, V> implements Dictiona
                 maxTreeDepth = depthAfter; // Update max depth if it increased
             }
             return added > 0;
-        }
+        }*/
+        
+            if (key == null||value ==null) {
+                throw new IllegalArgumentException("Null keys are not allowed.");
+            }
+            if (root == null) {
+                root = new TreeNode<>(key, value);
+                count++;
+                return true;
+            }
+            int added=root.insert(key,value,key.hashCode());
+            if(added==1){
+                count++;
+                if(TreeNode.currentAddTreeDepth>maxTreeDepth){
+                    maxTreeDepth=TreeNode.currentAddTreeDepth;
+                }
+                TreeNode.currentAddTreeDepth=0;
+            }
+            return true;
+    
     }
 
     @Override
     public V find(K key) throws IllegalArgumentException {
-        // TODO: Implement this. //Think about this
-        if (key == null) {
+        
+        /* if (key == null) {
             throw new IllegalArgumentException("Key cannot be null.");
         }
-        return (root != null) ? root.find(key, key.hashCode()) : null;
+        return (root != null) ? root.find(key, key.hashCode()) : null; */
+        if(null==key)throw new IllegalArgumentException("Person to find cannot be null");
+            return (root.find(key,key.hashCode())); 
     }
 
     @Override

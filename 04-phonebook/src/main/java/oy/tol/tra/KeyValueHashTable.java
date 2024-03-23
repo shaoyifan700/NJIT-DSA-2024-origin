@@ -1,9 +1,6 @@
 package oy.tol.tra;
 
 public class KeyValueHashTable<K extends Comparable<K>, V> implements Dictionary<K, V> {
-
-    // This should implement a hash table.
-
     private Pair<K, V>[] values = null;
     private int count = 0;
     private int collisionCount = 0;
@@ -22,7 +19,7 @@ public class KeyValueHashTable<K extends Comparable<K>, V> implements Dictionary
 
     @Override
     public Type getType() {
-        return Type.HASHTABLE;
+       return Type.HASHTABLE;
     }
 
     @SuppressWarnings("unchecked")
@@ -31,7 +28,6 @@ public class KeyValueHashTable<K extends Comparable<K>, V> implements Dictionary
         if (capacity < DEFAULT_CAPACITY) {
             capacity = DEFAULT_CAPACITY;
         }
-        // Assuming capacity means the count of elements to add, so multiplying by fill factor.
         values = (Pair<K, V>[]) new Pair[(int) ((double) capacity * (1.0 + LOAD_FACTOR))];
         reallocationCount = 0;
         count = 0;
@@ -41,7 +37,6 @@ public class KeyValueHashTable<K extends Comparable<K>, V> implements Dictionary
 
     @Override
     public int size() {
-        // TODO: Implement this.
         return count;
     }
 
@@ -77,7 +72,7 @@ public class KeyValueHashTable<K extends Comparable<K>, V> implements Dictionary
         // if index was taken by different Person (collision), get new hash and index,
         // insert into table when the index has a null in it,
         // return true if existing Person updated or new Person inserted.
-        if (key == null) throw new IllegalArgumentException("Key cannot be null.");
+       /*  if (key == null) throw new IllegalArgumentException("Key cannot be null.");
         int index = key.hashCode() % values.length;
         int originalIndex = index;
         boolean isNewAddition = false; // This will indicate whether a new key-value pair was added.
@@ -107,24 +102,58 @@ public class KeyValueHashTable<K extends Comparable<K>, V> implements Dictionary
         }
 
         // Return true if a new key-value pair was added, false otherwise.
-        return isNewAddition;
+        return isNewAddition; */
+      if (null == key || value == null) throw new IllegalArgumentException("Person or phone number cannot be null");
+      if (((double)count * (1.0 + LOAD_FACTOR)) >= values.length) {
+            reallocate((int)((double)(values.length) * (1.0 / LOAD_FACTOR)));
+        }
+      int hashCode = key.hashCode();
+      int index = calculateIndexByHC(hashCode,key);
+      if(index == -1){
+            return false;
+        }
+      if (values[index]==null){
+            count++;
+        }
+      values[index] = new Pair<>(key, value);
+      return true;
     }
+
+    private int calculateIndexByHC(int hashCode,K key){
+        int index = Math.abs(hashCode) % values.length;
+  
+        int start = index;
+        while (values[index] != null && !values[index].getKey().equals(key)) {
+            index = (index + 1) % values.length;
+            if (index == start) {
+                return -1;
+            }
+        }
+        return index;
+    }
+
+    private int getIndexByHC(int hashCode,K key){
+        int index = Math.abs(hashCode) % values.length;
+  
+        int start = index;
+        while (values[index] == null || !values[index].getKey().equals(key)) {
+            index = (index + 1) % values.length;
+            if (index == start) {
+                return -1;
+            }
+        }
+        return index;
+    } 
 
     @Override
     public V find(K key) throws IllegalArgumentException {
-        if (key == null) throw new IllegalArgumentException("Key cannot be null.");
-
-        int index = key.hashCode() % values.length;
-        int originalIndex = index;
-
-        while (values[index] != null && !values[index].getKey().equals(key)) {
-            index = (index + 1) % values.length;
-            if (index == originalIndex) {
-                return null;
-            }
-        }
-
-        return values[index] != null ? values[index].getValue() : null;
+      if (null==key) throw new IllegalArgumentException("Person to find cannot be null");  
+      int hashCode = key.hashCode();
+      int index = getIndexByHC(hashCode,key);
+      if (index == -1){
+          return null;
+      }
+      return values[index].getValue();
     }
 
     @Override

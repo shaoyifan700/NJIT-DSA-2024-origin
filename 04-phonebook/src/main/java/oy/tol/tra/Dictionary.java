@@ -5,8 +5,10 @@ package oy.tol.tra;
  * It is possible to add these pairs to the data structure, and then
  * find values by key.
  * The actual concrete data structure that implements a Dictionary can
- * be either a linear array, hash table or binary search tree, for example.
+ * be either a linear array, hash table or binary search tree, for example.实现字典的实际数据结构可以
+ *可以是线性数组、散列表或二叉查找树，
  */
+//Dictionary接口
 public interface Dictionary<K extends Comparable<K>, V> {
    /**
     * The types of phonebook implementations in this task.
@@ -63,7 +65,8 @@ public interface Dictionary<K extends Comparable<K>, V> {
     * duplicate keys. Note, however, that different keys may have the same hash value,
     * so always compare the elements with the same hash using `equals` to check if the
     * keys are actually the same.
-    *
+    *注意，如果键在字典中已经存在，则键值对必须替换为参数中的新对,也就是说，字典不能包含
+*重复的密钥
     * @param key The key value to use in adding elements. Must not be null.
     * @param value The associated value for the key. Must not be null;
     * @return Returns true if the key-value pair was added to the Dictionary.
