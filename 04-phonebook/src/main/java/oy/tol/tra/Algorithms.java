@@ -8,45 +8,11 @@ public class Algorithms {
 private Algorithms(){
 
 }
-public static <T> void sortWithComparator(T[] array, Comparator<T> comparator) {
-        boolean swapped;
-        for (int i = 0; i < array.length - 1; i++) {
-            swapped = false;
-            for (int j = 0; j < array.length - i - 1; j++) {
-                if (comparator.compare(array[j], array[j + 1]) > 0) {
-                    T temp = array[j];
-                    array[j] = array[j + 1];
-                    array[j + 1] = temp;
-                    swapped = true;
-                }
-            }
-            if (!swapped) break;
-        }
-    }
 
-    public static <T> int partitionByRule(T[] array, int count, Predicate<T> rule) {
-        int selectedIndex = 0;
-        for (; selectedIndex < count; selectedIndex++) {
-            if (rule.test(array[selectedIndex])) {
-                break;
-            }
-        }
-        if (selectedIndex >= count) {
-            return count;
-        }
-        int nextIndex = selectedIndex + 1;
-        while (nextIndex != count) {
-            if (!rule.test(array[nextIndex])) {
-                swap(array, selectedIndex, nextIndex);
-                selectedIndex++;
-            }
-            nextIndex++;
-        }
-        return selectedIndex;
-    }
 
+    
 public static <T extends Comparable<T>> void fastSort(T [] array) {
-    if (array == null) {
+    if (array == null || array.length <= 1){
         return;
     }
     quickSort(array, 0, array.length-1); 
@@ -112,5 +78,42 @@ public static <E extends Comparable<E>> void quickSort(E[] array, int begin, int
         }
         swap(array, i + 1, end);
         return i + 1;
+    }
+
+    public static <T> int partitionByRule(T[] array, int count, Predicate<T> rule) {
+        int selectedIndex = 0;
+        for (; selectedIndex < count; selectedIndex++) {
+            if (rule.test(array[selectedIndex])) {
+                break;
+            }
+        }
+        if (selectedIndex >= count) {
+            return count;
+        }
+        int nextIndex = selectedIndex + 1;
+        while (nextIndex != count) {
+            if (!rule.test(array[nextIndex])) {
+                swap(array, selectedIndex, nextIndex);
+                selectedIndex++;
+            }
+            nextIndex++;
+        }
+        return selectedIndex;
+    }
+
+    public static <T> void sortWithComparator(T[] array, Comparator<T> comparator) {
+        boolean swapped;
+        for (int i = 0; i < array.length - 1; i++) {
+            swapped = false;
+            for (int j = 0; j < array.length - i - 1; j++) {
+                if (comparator.compare(array[j], array[j + 1]) > 0) {
+                    T temp = array[j];
+                    array[j] = array[j + 1];
+                    array[j + 1] = temp;
+                    swapped = true;
+                }
+            }
+            if (!swapped) break;
+        }
     }
 }
