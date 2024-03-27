@@ -37,7 +37,7 @@ public class KeyValueArray<K extends Comparable<K>, V> implements Dictionary<K,V
       return count;
    }
 
-   @Override//return填充率（即已存储的元素占数组总大小的比例）
+   @Override//return重新分配次数和填充率（即已存储的元素占数组总大小的比例）
    public String getStatus() {
       String toReturn = "KeyValueArray reallocated " + reallocationCount + " times, each time doubles the size\n";
       toReturn += String.format("KeyValueArray fill rate is %.2f%%%n", (count / (double)pairs.length) * 100.0);

@@ -2,7 +2,7 @@ package oy.tol.tra;
 
 /**
  * A dictionary is a data structure containing key-value -pairs.
- * It is possible to add these pairs to the data structure, and then
+ * It is possible to add these pairs to the data structure, and then//可以添加pair
  * find values by key.
  * The actual concrete data structure that implements a Dictionary can
  * be either a linear array, hash table or binary search tree, for example.实现字典的实际数据结构可以
@@ -46,10 +46,14 @@ public interface Dictionary<K extends Comparable<K>, V> {
     * this method to reallocate and keep existing elements. Use a private method you implement for that.
     * This method is only used when you have created an empty Dictionary and then you need to ensure
     * a non-default capacity.
-    *
+    *调用此方法将删除字典内部数组中的所有元素。不要调用
+*此方法用于重新分配和保留现有元素。使用你为此实现的私有方法。
+*仅当你创建了一个空字典，然后需要确保非默认容量时，才会使用此方法
+*
     * Note that implementations not based on arrays (e.g. binary search tree, linked list)
     * do not need to reserve capacity. For these, this method does nothing.
-    *
+    *注意，实现不基于数组(例如二叉查找树、链表)
+*不需要预留容量。对于这些，这个方法什么都不做。
     * @param size The number of elements the Dictionary can hold without reallocation.
     * @throws OutOfMemoryError Throws if memory runs out.
     */
@@ -66,7 +70,9 @@ public interface Dictionary<K extends Comparable<K>, V> {
     * so always compare the elements with the same hash using `equals` to check if the
     * keys are actually the same.
     *注意，如果键在字典中已经存在，则键值对必须替换为参数中的新对,也就是说，字典不能包含
-*重复的密钥
+*重复的密钥然而，不同的键可能具有相同的哈希值，
+*因此，总是使用`equals`比较具有相同哈希值的元素，以检查是否
+*键实际上是一样的。
     * @param key The key value to use in adding elements. Must not be null.
     * @param value The associated value for the key. Must not be null;
     * @return Returns true if the key-value pair was added to the Dictionary.

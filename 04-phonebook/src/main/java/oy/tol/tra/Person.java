@@ -49,10 +49,10 @@ public class Person implements Comparable<Person> {
         for (int i = 0; i < hashString.length(); i++) {
             hash=37*hash+hashString.charAt(i);
         }
-        return hash;
+        return hash;//返回哈希值
     }
     
-
+//来确定对象是否相等
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -60,7 +60,8 @@ public class Person implements Comparable<Person> {
         Person person = (Person) other;
         return firstName.equals(person.firstName) && lastName.equals(person.lastName);
     }
-
+//如果返回负数，表示当前对象应该排在另一个对象之前；
+//如果返回正数，表示当前对象应该排在另一个对象之后；如果返回0，表示两个对象相等，顺序不变。
     @Override
     public int compareTo(Person other) {
         int lastNameComparison = lastName.compareTo(other.lastName);

@@ -106,7 +106,7 @@ public static <E extends Comparable<E>> void quickSort(E[] array, int begin, int
         }
         return index;
     }
-
+//传入不同的比较器,就能实现升序排序与降序排序
     public static <T> void sortWithComparator(T[] array, Comparator<T> comparator) {
         boolean swapped;
         for (int i = 0; i < array.length - 1; i++) {

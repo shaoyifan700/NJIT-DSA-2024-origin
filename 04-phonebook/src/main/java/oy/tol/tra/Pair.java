@@ -36,7 +36,7 @@ public class Pair<K extends Comparable<K>, V> implements Comparable<Pair<K, V>> 
    public int compareTo(Pair<K, V> o) {
       return key.compareTo(o.key);
    }
-
+//用于比较两个 Pair 对象是否相等，仅通过比较它们的 key 属性来判断。
    @Override
    public boolean equals(Object obj) {
       if (this == obj) {
