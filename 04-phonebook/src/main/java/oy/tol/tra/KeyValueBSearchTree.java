@@ -1,8 +1,6 @@
 package oy.tol.tra;
 
 public class KeyValueBSearchTree<K extends Comparable<K>, V> implements Dictionary<K, V> {
-
-    
     private TreeNode<K, V> root;
     private int count = 0;
     private int maxTreeDepth = 0;
@@ -16,8 +14,6 @@ public class KeyValueBSearchTree<K extends Comparable<K>, V> implements Dictiona
     public int size() {
         return count;
     }
-
-
     /**
      * Prints out the statistics of the tree structure usage.
      * Here you should print out member variable information which tell something
@@ -34,7 +30,7 @@ public class KeyValueBSearchTree<K extends Comparable<K>, V> implements Dictiona
      */
     @Override
     public String getStatus() {
-        String toReturn = "Tree has max depth of " + maxTreeDepth + ".\n";
+        String toReturn = "Tree has max depth of " +  maxTreeDepth  + ".\n";
         toReturn += "Longest collision chain in a tree node is " + TreeNode.longestCollisionChain + "\n";
         TreeAnalyzerVisitor<K, V> visitor = new TreeAnalyzerVisitor<>();
         root.accept(visitor);
@@ -43,8 +39,7 @@ public class KeyValueBSearchTree<K extends Comparable<K>, V> implements Dictiona
         toReturn += "Ideal height if balanced: " + Math.ceil(Math.log(count)) + "\n";
         return toReturn;
     }
-
-    
+   
     @Override
     public boolean add(K key, V value) throws IllegalArgumentException, OutOfMemoryError {
         if (key == null||value ==null) {
@@ -66,17 +61,15 @@ public class KeyValueBSearchTree<K extends Comparable<K>, V> implements Dictiona
         return true;
     }
 
+    @Override
+    public V find(K key)throws IllegalArgumentException {
+       if(null==key)throw new IllegalArgumentException("Person to find cannot be null");
+            return (root.find(key,key.hashCode())); // Delegate finding to the root node
+      
+    }
 
 
     
-    @Override
-    public V find(K key) throws IllegalArgumentException {
-        if (key == null) {
-            throw new IllegalArgumentException("Key cannot be null.");
-        }
-        return (root != null) ? root.find(key, key.hashCode()) : null;
-    }
-
     @Override
     public void ensureCapacity(int size) throws OutOfMemoryError {
         // Nothing to do here. Trees need no capacity.

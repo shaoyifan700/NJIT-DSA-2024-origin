@@ -1,5 +1,6 @@
 package oy.tol.tra;
 import java.util.function.Predicate;
+import java.util.Arrays;
 import java.util.Comparator;
 
 //import java.util.Comparator;
@@ -81,24 +82,29 @@ public static <E extends Comparable<E>> void quickSort(E[] array, int begin, int
     }
 
     public static <T> int partitionByRule(T[] array, int count, Predicate<T> rule) {
-        int selectedIndex = 0;
-        for (; selectedIndex < count; selectedIndex++) {
-            if (rule.test(array[selectedIndex])) {
+        
+        int index = 0;
+        for (; index < count; index++) {
+            if (rule.test(array[index])) {
                 break;
             }
         }
-        if (selectedIndex >= count) {
+        
+        if (index >= count) {
             return count;
         }
-        int nextIndex = selectedIndex + 1;
+        
+        int nextIndex = index + 1;
+     
         while (nextIndex != count) {
             if (!rule.test(array[nextIndex])) {
-                swap(array, selectedIndex, nextIndex);
-                selectedIndex++;
+                swap(array, index, nextIndex);
+                
+                index++;
             }
             nextIndex++;
         }
-        return selectedIndex;
+        return index;
     }
 
     public static <T> void sortWithComparator(T[] array, Comparator<T> comparator) {
@@ -116,4 +122,7 @@ public static <E extends Comparable<E>> void quickSort(E[] array, int begin, int
             if (!swapped) break;
         }
     }
+
+    
+    
 }
