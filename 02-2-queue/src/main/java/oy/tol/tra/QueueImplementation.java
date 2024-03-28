@@ -89,6 +89,7 @@ public class QueueImplementation<E> implements QueueInterface<E> {
         throw new QueueIsEmptyException("Queue is empty");
     }
     E element = (E) itemArray[front];
+    itemArray[front] = null; // 将删除的元素置为 null
     if (front == rear) {
         front = -1;
         rear = -1;
