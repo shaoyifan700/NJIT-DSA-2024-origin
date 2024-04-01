@@ -110,14 +110,15 @@ public interface Dictionary<K extends Comparable<K>, V> {
     * sorted nor changed in any way.
     * The array must contain only valid elements (not nulls, for example).
     * @return The contents of the Dictionary as an array sorted by key value.
-    */
+    返回在新数组中按键升序排序的字典的内容。*/
    Pair<K,V> [] toSortedArray();
 
    /**
     * Compresses the internal array so that the array contains only
     * objects, and the size of the array is adjusted downwards accordingly.
     * For implementations having no internal array, this method does nothing.
-    */
+    压缩内部数组，使数组只包含对象，并相应地向下调整数组的大小。
+对于没有内部数组的实现，这个方法什么都不做。*/
    void compress() throws OutOfMemoryError;
 
 }

@@ -7,7 +7,7 @@ package oy.tol.tra;
 public interface LinkedListInterface<E> {
    
    /**
-    * Add an element to the end of the list.
+    * Add an element to the end of the list.在链表尾部add元素 
     * @param element The element to add, must not be null.
     * @throws NullPointerException If the parameter element is null.
     * @throws LinkedListAllocationException If failed to allocate a new list element.

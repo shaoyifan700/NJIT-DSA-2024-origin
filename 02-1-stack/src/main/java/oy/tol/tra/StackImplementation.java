@@ -62,15 +62,15 @@ public class StackImplementation<E> implements StackInterface<E> {
 
    @Override
    public void push(E element) throws StackAllocationException, NullPointerException {
-      // TODO: Implement this
+      if (element == null) {
+         throw new NullPointerException("Cannot push null element into the stack");
+     }
       if (currentIndex == capacity - 1) {
          // 如果堆栈已满，重新分配更多空间
          resizeArray();
      }
  
-     if (element == null) {
-         throw new NullPointerException("Cannot push null element into the stack");
-     }
+     
  
      currentIndex++;
      itemArray[currentIndex] = element;            

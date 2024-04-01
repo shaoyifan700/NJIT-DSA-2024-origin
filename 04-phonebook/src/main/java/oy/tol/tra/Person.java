@@ -49,9 +49,9 @@ public class Person implements Comparable<Person> {
         for (int i = 0; i < hashString.length(); i++) {
             hash=37*hash+hashString.charAt(i);
         }
-        return hash;//返回哈希值
+        return hash;
     }
-    
+
 //来确定对象是否相等
     @Override
     public boolean equals(Object other) {
