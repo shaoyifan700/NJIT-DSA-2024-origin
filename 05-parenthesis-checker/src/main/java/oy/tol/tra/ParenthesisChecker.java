@@ -47,7 +47,7 @@ public class ParenthesisChecker {
     * @throws ParenthesesException if the parentheses did not match as intended.
     * @throws StackAllocationException If the stack cannot be allocated or reallocated if necessary.
     */
-    public static int checkParentheses(StackInterface<Character> stack, String fromString) throws ParenthesesException {
+    /* public static int checkParentheses(StackInterface<Character> stack, String fromString) throws ParenthesesException {
       // TODO:
       // for each character in the input string
       //   if character is an opening parenthesis -- one of "([{"
@@ -61,5 +61,58 @@ public class ParenthesisChecker {
       //         throw an exception, wrong kind of parenthesis were in the text (e.g. "asfa ( asdf } sadf")
       // if the stack is not empty after all the characters have been handled
       //   throw an exception since the string has more opening than closing parentheses.
-   }
+
+   } */
+   public static int checkParentheses(StackInterface<Character> stack, String fromString) throws ParenthesesException {
+      // 遍历字符串中的每个字符
+      for (char c : fromString.toCharArray()) {
+          if (c == '(' || c == '[' || c == '{') {
+              // 如果字符是开放括号之一，则将其推入堆栈
+              try {
+                  stack.push(c);
+              } catch (StackAllocationException e) {
+                  throw new ParenthesesException("Failed to push opening parenthesis onto stack", ParenthesesException.STACK_FAILURE);
+              }
+          } else if (c == ')' || c == ']' || c == '}') {
+              // 如果字符是关闭括号之一
+              try {
+                  // 弹出堆栈中的最新开放括号
+                  Character popped = stack.pop();
+                  if (popped == null) {
+                      // 如果弹出的项目为null，则有太多的关闭括号
+                      throw new ParenthesesException("Too many closing parentheses", ParenthesesException.TOO_MANY_CLOSING_PARENTHESES);
+                  }
+                  // 检查弹出的开放括号与读取的关闭括号是否匹配
+                  if (!((c == ')' && popped == '(') || (c == ']' && popped == '[') || (c == '}' && popped == '{'))) {
+                      // 如果它们不匹配，则抛出异常
+                      throw new ParenthesesException("Wrong kind of parenthesis in text", ParenthesesException.PARENTHESES_IN_WRONG_ORDER);
+                  }
+              } catch (StackIsEmptyException e) {
+                  // 如果堆栈为空，则有太少的关闭括号
+                  throw new ParenthesesException("Too few closing parentheses", ParenthesesException.TOO_FEW_CLOSING_PARENTHESES);
+              }
+          }
+      }
+  
+      // 如果堆栈不为空，则字符串中有更多的开放括号而没有关闭括号
+      if (!stack.isEmpty()) {
+          throw new ParenthesesException("String has more opening than closing parentheses", ParenthesesException.TOO_FEW_CLOSING_PARENTHESES);
+      }
+  
+      // 返回字符串中找到的括号的总数（包括开放和关闭）
+      return countParentheses(fromString);
+  }
+  
+  // 辅助方法：计算字符串中括号的数量
+  private static int countParentheses(String str) {
+      int count = 0;
+      for (char c : str.toCharArray()) {
+          if (c == '(' || c == '[' || c == '{' || c == ')' || c == ']' || c == '}') {
+              count++;
+          }
+      }
+      return count;
+  }
+  
+  
 }
