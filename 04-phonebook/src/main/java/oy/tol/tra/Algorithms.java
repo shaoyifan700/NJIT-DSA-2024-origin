@@ -10,7 +10,22 @@ private Algorithms(){
 
 }
 
-
+public static <T extends Comparable<T>> void sort(T [] array) {
+    if(null == array){
+        return;
+    }
+    int n = array.length;
+         for (int i = 0; i < n - 1; i++) {
+               for (int j = 0; j < n - i - 1; j++) {
+                  if (array[j].compareTo(array[j + 1])>0) {
+                     // 交换 grades[j] 和 grades[j + 1]
+                     
+                     swap(array,j,j+1);
+                  }
+               }
+         }
+    
+}
     
 public static <T extends Comparable<T>> void fastSort(T [] array) {
     if (array == null || array.length <= 1){
