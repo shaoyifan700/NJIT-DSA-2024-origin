@@ -11,6 +11,7 @@ public class QueueImplementation<E> implements QueueInterface<E> {
     public QueueImplementation() throws QueueAllocationException {//构造器      
       // TODO: call the constructor with size parameter with default size of 10.
     try {
+        this.capacity = DEFAULT_QUEUE_SIZE;
         // 调用带有大小参数的构造函数，默认大小为10
         this.itemArray = new Object[DEFAULT_QUEUE_SIZE];
         } 
@@ -36,25 +37,7 @@ public class QueueImplementation<E> implements QueueInterface<E> {
    }
 
    public void enqueue(E element) throws QueueAllocationException, NullPointerException {
-    /*if (element == null) {
-        throw new NullPointerException("Cannot enqueue null element");
-    }
-    if (currentSize == capacity) {
-        throw new QueueAllocationException("Queue is full");
-        
-    }
-    if (currentSize == capacity){
-        resize(capacity * 2);
-
-    }
-    if (front == -1) {
-        front = 0;
-    }
-    rear = (rear + 1) % capacity;
-    itemArray[rear] = element;
-    currentSize++;
-*/
-
+   
     if (element == null) {
         throw new NullPointerException("Cannot enqueue null element");
     }
